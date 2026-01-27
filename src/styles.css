@@ -1,0 +1,57 @@
+body {
+  margin: 0;
+  font-family: Arial, Helvetica, sans-serif;
+  background: #0e0e11;
+  color: white;
+}
+
+.app {
+  padding: 20px;
+  text-align: center;
+}
+
+.video-row {
+  display: flex;
+  gap: 20px;
+  justify-content: center;
+  margin-top: 20px;
+}
+
+.video-box {
+  background: #1c1c22;
+  padding: 10px;
+  border-radius: 10px;
+  width: 320px;
+}
+
+.video-box span {
+  display: block;
+  margin-bottom: 5px;
+  font-size: 14px;
+}
+
+video {
+  width: 100%;
+  border-radius: 8px;
+}
+
+.transcript {
+  margin: 20px auto;
+  padding: 15px;
+  background: #1c1c22;
+  border-radius: 10px;
+  max-width: 700px;
+}
+
+.controls button {
+  padding: 12px 24px;
+  font-size: 16px;
+  background: #4cafef;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.controls button:hover {
+  background: #6bbcff;
+}
