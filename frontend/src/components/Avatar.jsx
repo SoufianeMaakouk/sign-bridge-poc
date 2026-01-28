@@ -1,20 +1,46 @@
-import { Canvas, useFrame } from "@react-three/fiber";
+import { Canvas } from "@react-three/fiber";
 import { OrbitControls, useGLTF, useAnimations } from "@react-three/drei";
-import { useRef } from "react";
+import { useEffect, useRef, useMemo } from "react";
 
 function AvatarModel({ animationName }) {
-  const { scene, animations } = useGLTF("/models/avatar.glb");
-  const { actions } = useAnimations(animations, scene);
-  const ref = useRef();
+  const group = useRef();
 
-  // Play animation when animationName changes
-  useFrame(() => {
-    if (animationName && actions[animationName]) {
-      actions[animationName].reset().fadeIn(0.2).play();
+  const avatar = useGLTF("/models/avatar.glb");
+  const hello = useGLTF("/models/animations/hello.glb");
+  const thankyou = useGLTF("/models/animations/thankyou.glb");
+
+  // 🔑 Rename animation clips explicitly
+  const animations = useMemo(() => {
+    const h = hello.animations.map(a => a.clone());
+    h.forEach(a => (a.name = "hello"));
+
+    const t = thankyou.animations.map(a => a.clone());
+    t.forEach(a => (a.name = "thankyou"));
+
+    return [...h, ...t];
+  }, [hello, thankyou]);
+
+  const { actions } = useAnimations(animations, group);
+
+  useEffect(() => {
+    if (!animationName) return;
+
+    Object.values(actions).forEach(a => a.stop());
+
+    const action = actions[animationName];
+    if (action) {
+      action.reset().fadeIn(0.2).play();
     }
-  });
+  }, [animationName, actions]);
 
-  return <primitive ref={ref} object={scene} scale={1.6} position={[0, -1.6, 0]} />;
+  return (
+    <primitive
+      ref={group}
+      object={avatar.scene}
+      scale={1.6}
+      position={[0, -1.6, 0]}
+    />
+  );
 }
 
 export default function Avatar({ animationName }) {
