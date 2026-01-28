@@ -1,9 +1,12 @@
+import { useState } from "react";
 import VideoPanel from "./components/VideoPanel";
 import Transcript from "./components/Transcript";
 import Controls from "./components/Controls";
 import Avatar from "./components/Avatar";
 
 export default function App() {
+  const [animation, setAnimation] = useState("");
+
   return (
     <div className="app">
       <h1>🏟️ Inclusive Sports Interview – SignBridge PoC</h1>
@@ -16,9 +19,9 @@ export default function App() {
       <Transcript />
 
       <h2>AI Sign Language Avatar</h2>
-      <Avatar />
+      <Avatar animationName={animation} />
 
-      <Controls />
+      <Controls setAnimation={setAnimation} />
     </div>
   );
 }
